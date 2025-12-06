@@ -83,3 +83,95 @@ graph TD
   F --> G[Rafraichir la liste affichee]
   G --> H[Afficher un message de confirmation]
 ```
+## Flux UC4 (Gerer le stock)
+
+```mermaid
+graph TD
+  A[Choisir entree / sortie / mise a jour] --> B[Saisir produit et quantite]
+  B --> C[Valider l'operation]
+  C --> D{Donnees valides ?}
+  D -- Non --> E[Message d'erreur + rester sur le formulaire]
+  E --> B
+  D -- Oui --> F[Mettre a jour le stock en base MySQL]
+  F --> G[Enregistrer le mouvement]
+  G --> H[Rafraichir les indicateurs de stock]
+  H --> I[Afficher confirmation]
+```
+
+## Flux UC5 (Enregistrer mouvement)
+
+```mermaid
+graph TD
+  A[Selectionner type de mouvement] --> B[Saisir produit / quantite / motif]
+  B --> C[Valider]
+  C --> D{Donnees valides ?}
+  D -- Non --> E[Afficher erreur et rester sur le formulaire]
+  E --> B
+  D -- Oui --> F[Creer l'entree mouvement en base MySQL]
+  F --> G[Lier au stock concerne]
+  G --> H[Afficher confirmation]
+```
+
+## Flux UC6 (Consulter l'historique des mouvements)
+
+```mermaid
+graph TD
+  A[Ouvrir l'historique] --> B[Charger les mouvements depuis MySQL]
+  B --> C[Afficher la liste]
+  C --> D[Appliquer un filtre : produit / date / type]
+  D --> E[Actualiser la liste filtree]
+```
+
+## Flux UC7 (Afficher produits par categorie / trier)
+
+```mermaid
+graph TD
+  A[Ouvrir l'affichage produits] --> B[Charger les produits]
+  B --> C[Choisir categorie ou critere de tri]
+  C --> D[Appliquer filtre/tri]
+  D --> E[Afficher la liste mise a jour]
+```
+
+## Flux UC8 (Alertes stock)
+
+```mermaid
+graph TD
+  A[Surveillance des seuils<br/>batch ou temps reel] --> B{Stock faible ou rupture ?}
+  B -- Non --> C[Continuer la surveillance]
+  B -- Oui --> D[Generer alerte]
+  D --> E[Notifier le gestionnaire]
+  E --> F[Proposer actions : commande ou ajustement]
+```
+
+## Flux UC9 (Assigner un role a un employe)
+
+```mermaid
+graph TD
+  A[Selectionner un employe] --> B[Ouvrir la liste des roles]
+  B --> C[Choisir un role]
+  C --> D[Valider l'assignation]
+  D --> E{Role valide ?}
+  E -- Non --> F[Afficher un message d'erreur]
+  E -- Oui --> G[Mettre a jour le role de l'employe en base MySQL]
+  G --> H[Rafraichir la liste / fiche employe]
+  H --> I[Afficher un message de confirmation]
+```
+
+## Flux UC10 (Gerer les roles)
+
+```mermaid
+graph TD
+  A[Ouvrir le referentiel des roles] --> B[Choisir ajouter / modifier / supprimer]
+  B --> C{Action ?}
+  C -- Ajouter --> D[Saisir nom + description]
+  C -- Modifier --> E[Selectionner un role et ajuster les champs]
+  C -- Supprimer --> F[Selectionner un role et confirmer]
+  D --> G[Valider]
+  E --> G
+  F --> G
+  G --> H{Validation OK ?}
+  H -- Non --> I[Afficher erreur et rester sur l'ecran]
+  H -- Oui --> J[Mettre a jour la table role en base MySQL]
+  J --> K[Rafraichir la liste des roles]
+  K --> L[Afficher un message de confirmation]
+```
