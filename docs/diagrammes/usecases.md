@@ -56,3 +56,30 @@ graph TD
   G --> H[Rafraichir la liste affichee]
   H --> I[Afficher un message de confirmation]
 ```
+## Flux UC2 (Modifier un employe)
+
+```mermaid
+graph TD
+  A[Selectionner un employe dans la liste] --> B[Charger les informations dans le formulaire]
+  B --> C[Modifier les champs souhaites]
+  C --> D[Valider]
+  D --> E{Champs obligatoires remplis ?}
+  E -- Non --> F[Afficher un message d'erreur et rester sur le formulaire]
+  F --> C
+  E -- Oui --> G[Mettre a jour l'employe en base MySQL]
+  G --> H[Rafraichir la liste affichee]
+  H --> I[Afficher un message de confirmation]
+```
+
+## Flux UC3 (Supprimer un employe)
+
+```mermaid
+graph TD
+  A[Selectionner un employe dans la liste] --> B[Clique sur Supprimer]
+  B --> C[Demander confirmation]
+  C --> D{Confirme ?}
+  D -- Non --> E[Annuler l'action]
+  D -- Oui --> F[Supprimer l'employe en base MySQL]
+  F --> G[Rafraichir la liste affichee]
+  G --> H[Afficher un message de confirmation]
+```
